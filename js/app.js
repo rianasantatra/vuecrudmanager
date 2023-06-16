@@ -21,12 +21,12 @@ const App = {
     goToStudentsList() {
       this.changeNavigationState("list");
     },
-    changeNavigationState(destination) {
+    changeNavigationState(route) {
       this.showCreateForm = false;
       this.showHome = false;
       this.showStudentsList = false;
 
-      switch (destination) {
+      switch (route) {
         case "home":
           this.showHome = true;
           break;
