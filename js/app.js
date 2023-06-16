@@ -18,9 +18,11 @@ const App = {
     goToCreateForm() {
       this.changeNavigationState("form");
     },
+
     goToStudentsList() {
       this.changeNavigationState("list");
     },
+
     changeNavigationState(route) {
       this.showCreateForm = false;
       this.showHome = false;
@@ -39,6 +41,7 @@ const App = {
 
         default:
           this.showHome = true;
+          break;
       }
     },
   },
