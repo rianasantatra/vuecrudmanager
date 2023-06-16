@@ -31,10 +31,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#formulaire">Form</a>
+                            <a class="nav-link" href="#formulaire" @click-prevent="goToCreateForm()">Form</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#listes">List</a>
+                            <a class="nav-link" href="#listes" @click-prevent="goToStudentsList()">List</a>
                         </li>
                     </ul>
                 </div>
@@ -43,6 +43,14 @@
     </header>
     <main class="container">
         <div class="bg-light p-5 rounded" v-if="showHome">
+            <h1>CRUD Manager</h1>
+            <p class="lead">This example is a quick exercise to illustrate how VusJS work</p>
+        </div>
+        <div class="bg-light p-5 rounded" v-if="showCreateForm">
+            <h1>CRUD Manager</h1>
+            <p class="lead">This example is a quick exercise to illustrate how VusJS work</p>
+        </div>
+        <div class="bg-light p-5 rounded" v-if="showStudentsList">
             <h1>CRUD Manager</h1>
             <p class="lead">This example is a quick exercise to illustrate how VusJS work</p>
         </div>
