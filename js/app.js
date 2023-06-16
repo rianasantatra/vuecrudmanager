@@ -22,8 +22,8 @@ const App = {
       this.changeNavigationState("list");
     },
     changeNavigationState(destination) {
-      this.showHome = false;
       this.showCreateForm = false;
+      this.showHome = false;
       this.showStudentsList = false;
 
       switch (destination) {
@@ -39,7 +39,6 @@ const App = {
 
         default:
           this.showHome = true;
-          break;
       }
     },
   },
