@@ -7,15 +7,40 @@ const App = {
     };
   },
 
+  mounted() {
+    this.changeNavigationState("home");
+  },
+
   methods: {
     goToHome() {
-      this.showHome = true;
+      this.changeNavigationState("home");
     },
     goToCreateForm() {
-      this.showCreateForm = true;
+      this.changeNavigationState("form");
     },
     goToStudentsList() {
-      this.showStudentsList = true;
+      this.changeNavigationState("list");
+    },
+    changeNavigationState(destination) {
+      this.showHome = false;
+      this.showCreateForm = false;
+      this.showStudentsList = false;
+
+      switch (destination) {
+        case "home":
+          this.showHome = true;
+          break;
+        case "form":
+          this.showCreateForm = true;
+          break;
+        case "list":
+          this.showStudentsList = true;
+          break;
+
+        default:
+          this.showHome = true;
+          break;
+      }
     },
   },
 };
