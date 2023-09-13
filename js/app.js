@@ -4,11 +4,17 @@ const App = {
       showHome: false,
       showCreateForm: false,
       showStudentsList: false,
+      newStudent: {
+        Name: "",
+        FirstName: "",
+        DateNaissance: "",
+        NiveauScolaire: "",
+      },
     };
   },
 
   mounted() {
-    this.changeNavigationState("home");
+    this.changeNavigationState("form");
   },
 
   methods: {
@@ -21,6 +27,10 @@ const App = {
 
     goToStudentsList() {
       this.changeNavigationState("list");
+    },
+
+    addStudent() {
+      console.log(this.newStudent);
     },
 
     changeNavigationState(route) {

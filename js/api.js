@@ -30,10 +30,10 @@ function updateStudent(student) {
   const updatedDB = db.map(function (curStudent) {
     if (curStudent.id == student.id) {
       return {
-        nom: student.nom,
-        prenom: student.prenom,
-        dateNaissance: student.dateNaissance,
-        nivSchool: student.nivSchool,
+        Name: student.Name,
+        FirstName: student.FirstName,
+        DateNaissance: student.DateNaissance,
+        NiveauScolaire: student.NiveauScolaire,
         id: student.id,
       };
     }
@@ -69,3 +69,13 @@ function getStudent(id) {
 /**
  * function search
  */
+function searchByName(name) {
+  const db = getLocalDB();
+  const filteredDB = db.filter((data) => {
+    return (
+      data.nom.toLowercase().includes(name.toLowercase()) ||
+      data.prenom.toLowercase().includes(name.toLowercase())
+    );
+  });
+  return filteredDB;
+}

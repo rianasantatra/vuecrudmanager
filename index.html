@@ -55,22 +55,26 @@
                             <div class="d-flex mb-2">
                                 <h5 class="card-title flex-grow-1">Student Form</h5>
                             </div>
-                            <form class="row g-3">
+                            <form class="row g-3" @submit.prevent="addStudent">
                                 <div class="col-6">
-                                    <label for="inputName" class="form-label">Nom(s)</label>
-                                    <input required type="text" class="form-control" id="inputName">
+                                    <label for="Name" class="form-label">Nom(s)</label>
+                                    <input v-model="newStudent.Name" required type="text" class="form-control"
+                                        name="Name">
                                 </div>
                                 <div class="col-6">
-                                    <label for="inputFirstname" class="form-label">Prénom(s)</label>
-                                    <input required type="text" class="form-control" id="inputFirstname">
+                                    <label for="FirstName" class="form-label">Prénom(s)</label>
+                                    <input v-model="newStudent.FirstName" required type="text" class="form-control"
+                                        id="FirstName">
                                 </div>
                                 <div class="col-6">
-                                    <label for="inputDatenaissance" class="form-label">Date de naissance</label>
-                                    <input required type="date" class="form-control" id="inputDatenaissance">
+                                    <label for="DateNaissance" class="form-label">Date de naissance</label>
+                                    <input v-model="newStudent.DateNaissance" required type="date" class="form-control"
+                                        id="Datenaissance">
                                 </div>
                                 <div class="col-6">
-                                    <label for="selectNiveauScolaire" class="form-label">Niveau scolaire</label>
-                                    <select required id="selectNiveauScolaire" class="form-select">
+                                    <label for="NiveauScolaire" class="form-label">Niveau scolaire</label>
+                                    <select v-model="newStudent.NiveauScolaire" required id="NiveauScolaire"
+                                        class="form-select">
                                         <option value=""></option>
                                         <option value="Terminal A">Terminal A</option>
                                         <option value="Terminal D">Terminal D</option>
