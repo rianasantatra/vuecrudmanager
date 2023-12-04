@@ -1,3 +1,27 @@
+const checkIfEmptyValue = (obj) => {
+  let isEmpty = false;
+  for (const prop in obj) {
+    if (obj[prop] == "") {
+      isEmpty = true;
+    }
+  }
+  return isEmpty;
+};
+
+const showSuccessMessage = (message) => {
+  swal({
+    text: message,
+    icon: "success",
+  });
+};
+
+const showErrorMessage = (message) => {
+  swal({
+    text: message,
+    icon: "error",
+  });
+};
+
 const App = {
   data() {
     return {
@@ -29,8 +53,25 @@ const App = {
       this.changeNavigationState("list");
     },
 
-    addStudent() {
-      console.log(this.newStudent);
+    submitStudent() {
+      if (!checkIfEmptyValue(this.newStudent)) {
+        if (
+          !checkIfStudentExist(this.newStudent.name, this.newStudent.prenom)
+        ) {
+          addStudent(this.newStudent);
+          this.newStudent = {
+            Name: "",
+            FirstName: "",
+            DateNaissance: "",
+            NiveauScolaire: "",
+          };
+          showSuccessMessage("Student Successfully added!");
+        } else {
+          showErrorMessage("Student recorded already!");
+        }
+      } else {
+        showErrorMessage("Ooops!...Fill the form please!");
+      }
     },
 
     changeNavigationState(route) {

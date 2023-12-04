@@ -16,7 +16,7 @@ function updateDB(db) {
  */
 function addStudent(student) {
   const db = getLocalDB();
-
+  console.log(db);
   student.id = Date.now() + "";
   db.push(student);
   updateDB(db);
@@ -69,13 +69,21 @@ function getStudent(id) {
 /**
  * function search
  */
-function searchByName(name) {
+function searchByName(name, firstname) {
   const db = getLocalDB();
   const filteredDB = db.filter((data) => {
-    return (
-      data.nom.toLowercase().includes(name.toLowercase()) ||
-      data.prenom.toLowercase().includes(name.toLowercase())
-    );
+    return data.name.includes(name) || data.firstname.includes(firstname);
   });
   return filteredDB;
+}
+
+/**
+ * check if record already exist
+ */
+function checkIfStudentExist(name, firstname) {
+  const db = getLocalDB();
+  const filteredDB = db.filter((data) => {
+    return data.name == name && data.firstname == firstname;
+  });
+  return filteredDB.length > 0;
 }
