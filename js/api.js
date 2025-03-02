@@ -69,12 +69,13 @@ function getStudent(id) {
 /**
  * function search
  */
-function searchByName(name, firstname) {
+function searchByName(query) {
   const db = getLocalDB();
-  const filteredDB = db.filter((data) => {
-    return data.name.includes(name) || data.firstname.includes(firstname);
-  });
-  return filteredDB;
+  return db.filter(
+    (data) =>
+      data.Name.toLowerCase().includes(query.toLowerCase()) ||
+      data.FirstName.toLowerCase().includes(query.toLowerCase())
+  );
 }
 
 /**
@@ -82,8 +83,9 @@ function searchByName(name, firstname) {
  */
 function checkIfStudentExist(name, firstname) {
   const db = getLocalDB();
-  const filteredDB = db.filter((data) => {
-    return data.name == name && data.firstname == firstname;
-  });
-  return filteredDB.length > 0;
+  return db.some(
+    (data) =>
+      data.Name.toLowerCase() === name.toLowerCase() &&
+      data.FirstName.toLowerCase() === firstname.toLowerCase()
+  );
 }

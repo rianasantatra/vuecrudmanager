@@ -1,11 +1,14 @@
 const checkIfEmptyValue = (obj) => {
-  let isEmpty = false;
-  for (const prop in obj) {
-    if (obj[prop] == "") {
-      isEmpty = true;
-    }
-  }
-  return isEmpty;
+  const fieldsToCheck = [
+    "Name",
+    "FirstName",
+    "DateNaissance",
+    "NiveauScolaire",
+  ];
+  return fieldsToCheck.some((prop) => {
+    const value = obj[prop];
+    return value === "" || value === null || value === undefined;
+  });
 };
 
 const showSuccessMessage = (message) => {
@@ -33,12 +36,17 @@ const App = {
         FirstName: "",
         DateNaissance: "",
         NiveauScolaire: "",
+        id: null,
       },
+      students: [],
+      searchQuery: "",
+      isEditing: false,
     };
   },
 
   mounted() {
-    this.changeNavigationState("form");
+    this.goToStudentsList();
+    this.loadStudents();
   },
 
   methods: {
@@ -48,30 +56,83 @@ const App = {
     goToCreateForm() {
       this.changeNavigationState("form");
     },
-
     goToStudentsList() {
       this.changeNavigationState("list");
+      this.loadStudents();
+    },
+
+    loadStudents() {
+      this.students = getLocalDB();
     },
 
     submitStudent() {
       if (!checkIfEmptyValue(this.newStudent)) {
-        if (
-          !checkIfStudentExist(this.newStudent.name, this.newStudent.prenom)
-        ) {
-          addStudent(this.newStudent);
-          this.newStudent = {
-            Name: "",
-            FirstName: "",
-            DateNaissance: "",
-            NiveauScolaire: "",
-          };
-          showSuccessMessage("Student Successfully added!");
+        if (this.isEditing) {
+          console.log("Updating with:", this.newStudent); // Débogage
+          updateStudent(this.newStudent);
+          showSuccessMessage("Student successfully updated!");
         } else {
-          showErrorMessage("Student recorded already!");
+          if (
+            !checkIfStudentExist(
+              this.newStudent.Name,
+              this.newStudent.FirstName
+            )
+          ) {
+            console.log("Adding with:", this.newStudent); // Débogage
+            addStudent(this.newStudent);
+            showSuccessMessage("Student successfully added!");
+          } else {
+            showErrorMessage("Student already exists!");
+            return;
+          }
         }
+        this.resetForm();
+        this.goToStudentsList();
       } else {
-        showErrorMessage("Ooops!...Fill the form please!");
+        showErrorMessage("Please fill all fields!");
       }
+    },
+
+    editStudent(student) {
+      console.log("Editing student:", student); // Débogage
+      this.newStudent = { ...student }; // Clone complet
+      this.isEditing = true;
+      this.goToCreateForm();
+    },
+
+    removeStudent(student) {
+      swal({
+        title: "Are you sure?",
+        text: "This student will be deleted!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          deleteStudent(student);
+          this.loadStudents();
+          showSuccessMessage("Student deleted!");
+        }
+      });
+    },
+
+    searchStudents() {
+      if (this.searchQuery.trim() === "") {
+        this.loadStudents();
+      } else {
+        this.students = searchByName(this.searchQuery);
+      }
+    },
+
+    resetForm() {
+      this.newStudent = {
+        Name: "",
+        FirstName: "",
+        DateNaissance: "",
+        NiveauScolaire: "",
+        id: null,
+      };
+      this.isEditing = false;
     },
 
     changeNavigationState(route) {
@@ -89,7 +150,6 @@ const App = {
         case "list":
           this.showStudentsList = true;
           break;
-
         default:
           this.showHome = true;
           break;
